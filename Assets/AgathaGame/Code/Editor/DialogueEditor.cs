@@ -7,18 +7,20 @@ using Object = System.Object;
 
 namespace AgathaGame
 {
-	[CustomEditor(typeof(Character))]
+	[CustomEditor(typeof(Dialogue))]
 	public class DialogueEditor : Editor
 	{
-		private Character _char;
+		private Dialogue _dialogue;
 
 		void OnEnable()
 		{
-			_char = target as Character;
+			_dialogue = target as Dialogue;
 		}
 
 		public override void OnInspectorGUI()
 		{
+			EditorGUILayout.LabelField("A1");
+			EditorGUILayout.Space(50, true);
 			DrawDefaultInspector();
 		}
 	}

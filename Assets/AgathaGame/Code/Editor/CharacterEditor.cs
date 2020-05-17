@@ -24,16 +24,16 @@ namespace AgathaGame
 		{
 			GUILayout.Label("Character");
 			EditorGUILayout.BeginHorizontal();
-			EditorGUIUtils.DrawImagePreview(_char.photo != null ? _char.photo.texture : null, new Vector2(150, 200));
+			EditorGUIUtils.DrawImagePreview(_char.Photo != null ? _char.Photo.texture : null, new Vector2(150, 200));
 			EditorGUILayout.BeginVertical();
 			GUILayout.Label("Name:");
-			_char.name = EditorGUILayout.TextField(_char.name);
+			_char.Name = EditorGUILayout.TextField(_char.Name);
 			GUILayout.Label("Photo:");
-			_char.photo = (Sprite) EditorGUILayout.ObjectField(_char.photo, typeof(Sprite), false);
+			_char.Photo = (Sprite) EditorGUILayout.ObjectField(_char.Photo, typeof(Sprite), false);
 			EditorGUILayout.EndVertical();
 			EditorGUILayout.EndHorizontal();
 			GUILayout.Label("Description:");
-			_char.description = EditorGUILayout.TextArea(_char.description, _descHeight, _descHeightMin);
+			_char.Description = EditorGUILayout.TextArea(_char.Description, _descHeight, _descHeightMin);
 		}
 	}
 }

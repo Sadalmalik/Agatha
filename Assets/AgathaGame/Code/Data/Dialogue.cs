@@ -21,8 +21,8 @@ namespace AgathaGame
 	[CreateAssetMenu(menuName = "Agatha Game/Dialogue")]
 	public class Dialogue : ScriptableObject
 	{
-		public string name;
-		public Speech[] lines;
-		public Choice[] choices;
+		public string Name;
+		public Speech[] Lines;
+		public Choice[] Choices;
 	}
 }
