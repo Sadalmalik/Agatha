@@ -16,53 +16,47 @@ public class CameraController : MonoBehaviour
 	[Header("Camera View")]
 	public Transform cameraRoot;
 
-	public Transform target;
-	public Vector3 offset;
-	public float damping;
+	public Transform cameraTarget;
+	public Vector3 cameraOffset;
+	[Range(0,20)]
+	public float cameraDamping;
 
 	[Header("Camera Zoom")]
-	public ZoomType type;
+	public ZoomType zoomType;
 
-	public float sensitivity;
-	public float minZoom;
-	public float maxZoom;
-
+	public float zoomSensitivity;
+	[Range(0,20)]
+	public float zoomDamping;
+	public float zoomMin;
+	public float zoomMax;
+	public float zoomTarget;
+	
 	private void Update()
 	{
-		print("m3 " + Input.GetAxis("Mouse ScrollWheel"));
+		//Mathf.MoveTowards()
 		HandleZoom();
 		HandlePosition();
 	}
 
 	private void HandleZoom()
 	{
-		float zoom;
 		float scroll = -Input.mouseScrollDelta.y;
-
-		switch (type)
+		
+		zoomTarget += scroll * zoomSensitivity;
+		zoomTarget =  Mathf.Clamp(zoomTarget, zoomMin, zoomMax);
+		var coef = 1 / (zoomDamping+1);
+		
+		switch (zoomType)
 		{
 			case ZoomType.Size:
-				zoom = targetCamera.orthographicSize;
-
-				zoom += scroll * sensitivity;
-				zoom =  Mathf.Clamp(zoom, minZoom, maxZoom);
-
-				targetCamera.orthographicSize = zoom;
+				targetCamera.orthographicSize = Mathf.Lerp(targetCamera.orthographicSize, zoomTarget, coef);
 				break;
 			case ZoomType.Fov:
-				zoom = targetCamera.fieldOfView;
-
-				zoom += scroll * sensitivity;
-				zoom =  Mathf.Clamp(zoom, minZoom, maxZoom);
-
-				targetCamera.fieldOfView = zoom;
+				targetCamera.fieldOfView = Mathf.Lerp(targetCamera.fieldOfView, zoomTarget, coef);
 				break;
 			case ZoomType.Distance:
 				var pos = targetCamera.transform.localPosition;
-
-				pos.z += scroll * sensitivity;
-				pos.z =  Mathf.Clamp(pos.z, minZoom, maxZoom);
-
+				pos.z = Mathf.Lerp(pos.z, zoomTarget, coef);
 				targetCamera.transform.localPosition = pos;
 				break;
 		}
@@ -70,6 +64,7 @@ public class CameraController : MonoBehaviour
 
 	private void HandlePosition()
 	{
-		cameraRoot.position = Vector3.Lerp(cameraRoot.position, target.position + offset, damping);
+		var coef = 1 / (cameraDamping+1);
+		cameraRoot.position = Vector3.Lerp(cameraRoot.position, cameraTarget.position + cameraOffset, coef);
 	}
 }
