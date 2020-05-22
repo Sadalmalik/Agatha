@@ -5,8 +5,9 @@ public class FPSCounter : MonoBehaviour
 {
     public Text label;
 
-    private int count = 0;
-    private float nextTime = 0;
+    private int _fps = 0;
+    private int _count = 0;
+    private float _nextTime = 0;
 
     private void Start()
     {
@@ -16,12 +17,13 @@ public class FPSCounter : MonoBehaviour
 
     private void Update()
     {
-        count++;
-        if (nextTime < Time.time)
+        _count++;
+        if (_nextTime < Time.time)
         {
-            nextTime += 1;
-            label.text = "FPS: " + count;
-            count = 0;
+            _nextTime += 1;
+            _fps = _count;
+            _count = 0;
         }
+        label.text = $"FPS: {1/Time.deltaTime:F1} (summ: {_fps})";
     }
 }

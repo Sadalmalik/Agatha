@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class UnityEvent : MonoBehaviour
@@ -43,6 +44,11 @@ public class UnityEvent : MonoBehaviour
     {
         add { CheckInstance(); OnApplicationFocusChanged_ += value; }
         remove { CheckInstance(); OnApplicationFocusChanged_ -= value; }
+    }
+    
+    public static Coroutine StartCoRoutine(IEnumerator routine)
+    {
+        return instance_.StartCoroutine(routine);
     }
 
     private static void CheckInstance()
